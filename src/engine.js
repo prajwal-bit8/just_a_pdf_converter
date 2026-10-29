@@ -161,10 +161,15 @@ async function pdfToWord(file,opt,progress) {
 export async function convert(tool,files,opt={},progress=()=>{}) {
   progress(5,'Preparing your files…');await tick();
   const stem=fileStem(files[0].name);
-  if(tool==='code-pdf'||tool==='code-word') {
+  if(tool==='code-pdf'||tool==='code-word'||tool==='code-pages') {
     const code=await import('./code-export.js');
-    return tool==='code-pdf'?code.codeToPdf(files,opt,progress):code.codeToWord(files,opt,progress);
+    if(tool==='code-pdf')return code.codeToPdf(files,opt,progress);
+    const result=await code.codeToWord(files,opt,progress);
+    if(tool==='code-pages')result.note='Download this .docx, then open it with Apple Pages on your Mac to edit or save as .pages. This is a Pages-compatible Word document, not a native .pages file. Code is not executed.';
+    return result;
   }
+  if(tool==='images-word')return (await import('./image-word.js')).imagesToWord(files,opt,progress);
+  if(tool==='pptx-word'||tool==='pptx-pdf')return (await import('./presentation.js')).presentationExport(files[0],tool==='pptx-word'?'word':'pdf',opt,progress);
   if(tool==='word-pdf')return wordToPdf(files[0],opt,progress);
   if(tool==='pdf-word')return pdfToWord(files[0],opt,progress);
   if(tool==='merge') {
