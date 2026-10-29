@@ -4,6 +4,8 @@ A private, browser-local document toolkit inspired by the practical workflow of 
 
 ## Features
 
+- Code to PDF and editable Word (.docx): C, C++, Java, Python, JavaScript, TypeScript, C#, Verilog, Arduino, HTML/CSS, SQL and other source/text formats.
+- Upload up to 10 source files or paste code. Reorder files, preview text, add a title and line numbers, choose A4/Letter, portrait/landscape, font size and tab width. Each source file starts on a new page.
 - Word to PDF: DOCX text, headings, tables, supported images; legacy Word 97–2003 DOC text extraction.
 - PDF to Word: editable selectable text, or full-page images in a DOCX.
 - Merge, split, reorder, delete and rotate PDF pages.
@@ -16,6 +18,8 @@ A private, browser-local document toolkit inspired by the practical workflow of 
 No documents are uploaded. Libraries, fonts, PDF worker resources and samples are served from the same site. Session files are held in memory and cleared on refresh. Local storage contains only favorite tool IDs and recent tool names/times/file counts.
 
 ## Limits
+
+Code conversion formats source text only; it does not execute code or capture program output. Files must be UTF-8, or UTF-16 with a byte-order mark. Code tools accept up to 1 MB/file, 10 files, 5,000 source lines, 400,000 characters and 8,000 wrapped lines per task. Tabs expand to configurable spaces; long lines wrap without removing text. PDF uses the bundled DejaVu Sans Mono font and reports unsupported characters rather than silently dropping them. Word preserves Unicode text; display depends on the reader's available fonts. The font license is in `dist/fonts/LICENSE-DejaVu.txt`.
 
 Conversions are approximate, not Microsoft Word or Acrobat rendering. DOCX complex layouts, custom fonts, headers and footers may differ; legacy DOC is text only. PDF-to-Word text mode does not reconstruct columns, tables or images. Scanned text cannot be edited: OCR is not included. Page-image Word mode preserves visual content without editable text. Compression flattens pages to JPEG, removing searchable text, forms and links. Password-protected documents are rejected. The UI explains these limits before each operation.
 
@@ -33,8 +37,10 @@ npm run build
 
 The deployment serves `dist/`. `build.mjs` uses esbuild to create lazy-loaded browser bundles and copies bundled PDF.js resources and Inter fonts. Source files are in `src/`; styles and the HTML entry are in `dist/`. Sample documents can be recreated with `node scripts/make-samples.mjs` (the static sample JPEG is retained).
 
-The tracked `.openai/hosting.json` retains the site's private hosting identity. Source synchronization and deployments use the Sites workflow.
+The tracked `.openai/hosting.json` retains the existing Sites project identity. Source synchronization and deployments use the Sites workflow.
+
+For Netlify, deploy branch `main`, leave the base directory blank, use `npm run build`, publish `dist`, and set `NODE_VERSION=22`. The source stylesheet, HTML, sample files and DejaVu font remain in `dist`; the build recreates dependency bundles and Inter fonts.
 
 ## Verification
 
-Node tests cover range validation, file limits, merging, extraction, organization/rotation, watermarks, numbering, image-to-PDF, reading order, and ANSI/Unicode legacy DOC text with field codes. Browser QA exercises conversions, page previews, controls and result screens with real sample documents.
+Node tests cover source encodings, tab stops, code wrapping, PDF pagination and font coverage, editable Word code, range validation, file limits, merging, extraction, organization/rotation, watermarks, numbering, image-to-PDF, reading order, and ANSI/Unicode legacy DOC text with field codes. Browser QA exercises conversions, page previews, controls and result screens with real sample documents.

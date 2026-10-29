@@ -161,6 +161,10 @@ async function pdfToWord(file,opt,progress) {
 export async function convert(tool,files,opt={},progress=()=>{}) {
   progress(5,'Preparing your files…');await tick();
   const stem=fileStem(files[0].name);
+  if(tool==='code-pdf'||tool==='code-word') {
+    const code=await import('./code-export.js');
+    return tool==='code-pdf'?code.codeToPdf(files,opt,progress):code.codeToWord(files,opt,progress);
+  }
   if(tool==='word-pdf')return wordToPdf(files[0],opt,progress);
   if(tool==='pdf-word')return pdfToWord(files[0],opt,progress);
   if(tool==='merge') {
