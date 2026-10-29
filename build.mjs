@@ -1,0 +1,11 @@
+import { build } from 'esbuild';
+import { cp, mkdir, rm } from 'node:fs/promises';
+await rm('dist/assets',{recursive:true,force:true});
+await mkdir('dist/assets',{recursive:true});
+await build({entryPoints:['src/main.js'],bundle:true,splitting:true,format:'esm',outdir:'dist/assets',minify:true,target:['es2022'],logLevel:'info',define:{'process.env.NODE_ENV':'"production"'}});
+await cp('node_modules/pdfjs-dist/build/pdf.worker.min.mjs','dist/assets/pdf.worker.min.mjs');
+await cp('node_modules/pdfjs-dist/standard_fonts','dist/assets/standard_fonts',{recursive:true});
+await cp('node_modules/pdfjs-dist/cmaps','dist/assets/cmaps',{recursive:true});
+await cp('node_modules/pdfjs-dist/wasm','dist/assets/wasm',{recursive:true});
+await mkdir('dist/fonts',{recursive:true});
+for(const weight of [400,500,600,700]) await cp(`node_modules/@fontsource/inter/files/inter-latin-${weight}-normal.woff2`,`dist/fonts/inter-${weight}.woff2`);
