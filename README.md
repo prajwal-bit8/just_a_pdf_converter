@@ -6,8 +6,7 @@ A private, browser-local document toolkit inspired by the practical workflow of 
 
 - Code to PDF and editable Word (.docx): C, C++, Java, Python, JavaScript, TypeScript, C#, Verilog, Arduino, HTML/CSS, SQL and other source/text formats.
 - Upload up to 10 source files or paste code. Reorder files, preview text, add a title and line numbers, choose A4/Letter, portrait/landscape, font size and tab width. Each source file starts on a new page.
-- Code for Apple Pages: exports editable `.docx` files that Pages can open on Mac; save as `.pages` in Pages if needed. Native `.pages` export is not included.
-- Images to Word: JPG, PNG, WebP, GIF and BMP in a `.docx` with one image per page, optional filenames, page size and orientation. Compatible with Word and Apple Pages; no OCR. Animated files use one still frame. Images are normalized locally, limited to 40 megapixels each and resized to at most 3,000 pixels on their longest side.
+- Images to Word: JPG, PNG, WebP, GIF and BMP in a `.docx` with one image per page, optional filenames, page size and orientation. No OCR. Animated files use one still frame. Images are normalized locally, limited to 40 megapixels each and resized to at most 3,000 pixels on their longest side.
 - PPTX to Word/PDF: handout-style exports of slide text and embedded JPG/PNG images in presentation order. Each slide starts a new page; long slides may span pages. Original slide layouts, backgrounds, charts, SmartArt, notes, animations and media are not reproduced. Tables become plain text; unsupported images are reported. Up to 100 slides, 200 image references, 400,000 text characters and 200 MB unpacked. Older `.ppt` and encrypted presentations are not supported.
 - Word to PDF: DOCX text, headings, tables, supported images; legacy Word 97–2003 DOC text extraction.
 - PDF to Word: editable selectable text, or full-page images in a DOCX.

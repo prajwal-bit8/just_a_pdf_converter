@@ -12,7 +12,7 @@ export const CODE_LANGUAGES = {
 };
 export const CODE_EXTENSIONS = Object.keys(CODE_LANGUAGES);
 export const CODE_FILE_LIMIT = 1024 * 1024;
-export const isCodeTool = id => ['code-pdf','code-word','code-pages'].includes(id);
+export const isCodeTool = id => ['code-pdf','code-word'].includes(id);
 export const isCodeFile = name => CODE_EXTENSIONS.includes(extension(name));
 
 export async function readCodeFile(file) {

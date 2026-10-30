@@ -53,5 +53,5 @@ export async function imagesToWord(files,opt={},progress=()=>{}) {
     await new Promise(resolve=>setTimeout(resolve,0));
   }
   progress(85,'Creating your image document…');
-  return {name:(files.length===1?fileStem(files[0].name):'image-document')+'.docx',blob:await imageDocument(images,opt),note:'One image per page, in your chosen order. Open this .docx in Word or Apple Pages. Images remain pictures; text is not extracted (no OCR). Animated files use one still frame. Large images are resized to 3,000 pixels on their longest side.'};
+  return {name:(files.length===1?fileStem(files[0].name):'image-document')+'.docx',blob:await imageDocument(images,opt),note:'One image per page, in your chosen order. Open this .docx in Word. Images remain pictures; text is not extracted (no OCR). Animated files use one still frame. Large images are resized to 3,000 pixels on their longest side.'};
 }

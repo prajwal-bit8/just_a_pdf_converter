@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import JSZip from 'jszip';
 import {imageDocument,fitImage,imagesToWord} from '../src/image-word.js';
-import {convert} from '../src/engine.js';
 
 test('image fitting preserves proportions and stays within portrait and landscape pages',()=>{
   for(const orientation of ['portrait','landscape'])for(const paper of ['A4','LETTER'])for(const [w,h] of [[4000,500],[500,4000],[100,100]]){
@@ -31,11 +30,4 @@ test('images are embedded in order with separate sections and optional captions'
   assert.doesNotMatch(noCaptionXml,/<w:t[^>]*>First/);
   await mkdir('qa',{recursive:true});await writeFile('qa/image-document.docx',new Uint8Array(await blob.arrayBuffer()));
   await assert.rejects(()=>imagesToWord([new File(['x'],'not-image.svg')]),/supported|Choose/i);
-});
-
-test('Apple Pages export is a real editable DOCX with an honest format label',async()=>{
-  const result=await convert('code-pages',[new File(['int main() {\n    return 0;\n}\n'],'lab.c')]);
-  assert.equal(result.name,'lab.docx');assert.match(result.note,/not a native .pages/);
-  const zip=await JSZip.loadAsync(await result.blob.arrayBuffer());
-  assert.match(await zip.file('word/document.xml').async('string'),/return 0;/);
 });
